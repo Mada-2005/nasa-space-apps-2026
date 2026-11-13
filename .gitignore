@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.pytest_cache/
+data/raw/
+data/cache/
+data/processed/
+ml/artifacts/
+*.nc
+*.h5
+*.tif
+.DS_Store

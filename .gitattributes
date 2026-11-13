@@ -1,0 +1,6 @@
+# Same line endings on Windows and Mac/Linux, so diffs and merges stay clean.
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.png binary
+*.js linguist-vendored=false
+app/vendor/** -diff

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "prediction.schema.json",
+  "title": "PredictionBundle",
+  "description": "The ONE shape that flows from ml/ to api/ to app/. Lane A owns it. Bump version on every change.",
+  "type": "object",
+  "required": ["version", "generated_at", "challenge", "model", "items"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" },
+    "generated_at": { "type": "string" },
+    "challenge": { "type": "string" },
+    "model": {
+      "type": "object",
+      "required": ["name", "version", "metrics"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "location", "time", "score", "label"],
+        "properties": {
+          "id": { "type": "string" },
+          "location": {
+            "type": "object",
+            "required": ["frame", "lat", "lon"],
+            "properties": {
+              "frame": { "enum": ["earth", "moon", "mars", "sky"] },
+              "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+              "lon": { "type": "number", "minimum": -360, "maximum": 360 },
+              "name": { "type": "string" }
+            }
+          },
+          "time": { "type": "string" },
+          "score": { "type": "number", "minimum": 0, "maximum": 1 },
+          "label": { "type": "string" },
+          "explanation": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["feature", "contribution"],
+              "properties": {
+                "feature": { "type": "string" },
+                "contribution": { "type": "number" }
+              }
+            }
+          },
+          "series": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["t", "v"],
+              "properties": {
+                "t": { "type": "string" },
+                "v": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
